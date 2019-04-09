@@ -1,5 +1,7 @@
 package com.mateacademy;
 
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -7,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Crud {
+    private static Logger logger = Logger.getLogger(Crud.class);
 
     public void createData(String tableName, String values) {
         Connection connection = Connector.getConnection();
@@ -28,7 +31,7 @@ public class Crud {
             statement = connection.createStatement();
             statement.executeUpdate(query);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException: " + e);
         }
     }
 
@@ -42,15 +45,14 @@ public class Crud {
         int columnsNumber = rsmd.getColumnCount();
 
         for (int i = 1; i <= columnsNumber; i++) {
-            System.out.print(rsmd.getColumnName(i) + " ");
+            logger.info(rsmd.getColumnName(i) + " ");
         }
-        System.out.println();
-
+        logger.info("");
         while (resultSet.next()) {
             for (int i = 1; i <= columnsNumber; i++) {
-                System.out.print(resultSet.getString(i) + " ");
+                logger.info(resultSet.getString(i) + " ");
             }
-            System.out.println();
+            logger.info("");
         }
 
     }
@@ -64,7 +66,7 @@ public class Crud {
             statement = connection.createStatement();
             statement.executeUpdate(query);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException: " + e);
         }
     }
 
@@ -76,7 +78,7 @@ public class Crud {
             statement = connection.createStatement();
             statement.executeUpdate(query);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException: " + e);
         }
     }
 }
