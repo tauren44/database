@@ -1,25 +1,29 @@
 package com.mateacademy;
 
 import org.apache.log4j.Logger;
-
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class Connector {
-    private static String url = "jdbc:mysql://localhost:3306/homework" +
-            "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-    private static String user = "root";
-    private static String password = "root";
     private static Logger logger = Logger.getLogger(Connector.class);
-
 
     public static Connection getConnection() {
         Connection connection = null;
+        Properties properties = new Properties();
+        InputStream inputStream;
         try {
-            connection = DriverManager.getConnection(url, user, password);
-        } catch (SQLException e) {
-            logger.error("SQLException: " + e);
+            inputStream = Connector.class.getClassLoader().getResourceAsStream("dbconfig.properties");
+            properties.load(inputStream);
+            connection = DriverManager.getConnection(
+                    properties.getProperty("url"),
+                    properties.getProperty("user"),
+                    properties.getProperty("password"));
+        } catch (SQLException | IOException e) {
+            logger.error("Exception: " + e);
         }
         return connection;
     }
