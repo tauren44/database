@@ -24,6 +24,7 @@ public class Connector {
                     properties.getProperty("password"));
         } catch (SQLException | IOException e) {
             logger.error("Exception: " + e);
+            throw new DBRunTimeException(e.getMessage());
         }
         return connection;
     }
