@@ -11,15 +11,13 @@ import java.util.List;
 
 public class CustomersCrud {
     private static final Logger LOGGER = Logger.getLogger(CustomersCrud.class);
+    private static final String CREATE = "INSERT INTO customers ( id, name, country,) VALUES (null, ?, ?)";;
+    private static final String READ = "SELECT * FROM customers";
+    private static final String UPDATE = "UPDATE customers SET name = ?, site = ? WHERE id = ?";;
+    private static final String DELETE = "DELETE FROM customers WHERE name = ?";
 
     public void addCustomer(Customer customer, Connection connection) {
-        String query = "INSERT INTO customers ("
-                + " id,"
-                + " name,"
-                + " country,"
-                + ") VALUES ("
-                + "null, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(CREATE)) {
 
             statement.setString(2, customer.getName());
             statement.setString(3, customer.getCountry());
@@ -31,9 +29,8 @@ public class CustomersCrud {
     }
 
     public void removeCustomer(Customer customer, Connection connection) {
-        String query = "DELETE FROM customers WHERE name = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(DELETE)) {
 
             statement.setString(2, customer.getName());
             statement.executeUpdate();
@@ -44,9 +41,8 @@ public class CustomersCrud {
     }
 
     public void updateCustomer(Customer customer, Connection connection, int id) {
-        String query = "UPDATE customers SET name = ?, site = ? WHERE id = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(UPDATE)) {
 
             statement.setInt(1, id);
             statement.setString(2, customer.getName());
@@ -60,9 +56,8 @@ public class CustomersCrud {
 
     public List<Customer> readCustomers(Connection connection) {
         List<Customer> list = new ArrayList<>();
-        String query = "SELECT * FROM customers";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(READ)) {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {

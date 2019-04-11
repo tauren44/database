@@ -11,17 +11,13 @@ import java.util.List;
 
 public class DevelopersCrud {
     private static final Logger LOGGER = Logger.getLogger(DevelopersCrud.class);
+    private static final String CREATE = "INSERT INTO developers (id, name, age, sex, salary,) VALUES (null, ?, ?, ?, ?)";;
+    private static final String READ = "SELECT * FROM developers";
+    private static final String UPDATE = "UPDATE developers SET name = ?, age = ?, sex = ?, salary = ? WHERE id = ?";
+    private static final String DELETE = "DELETE FROM developers WHERE name = ?";
 
     public void addDeveloper(Developer developer, Connection connection) {
-        String query = "INSERT INTO developers ("
-                + " id,"
-                + " name,"
-                + " age,"
-                + " sex,"
-                + " salary,"
-                + ") VALUES ("
-                + "null, ?, ?, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(CREATE)) {
 
             statement.setString(2, developer.getName());
             statement.setInt(3, developer.getAge());
@@ -35,9 +31,8 @@ public class DevelopersCrud {
     }
 
     public void removeDeveloper(Developer developer, Connection connection) {
-        String query = "DELETE FROM developers WHERE name = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(DELETE)) {
 
             statement.setString(2, developer.getName());
             statement.executeUpdate();
@@ -48,9 +43,7 @@ public class DevelopersCrud {
     }
 
     public void updateDeveloper(Developer developer, Connection connection, int id) {
-        String query = "UPDATE developers SET name = ?, age = ?, sex = ?, salary = ? WHERE id = ?";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(UPDATE)) {
 
             statement.setInt(1, id);
             statement.setString(2, developer.getName());
@@ -66,9 +59,8 @@ public class DevelopersCrud {
 
     public List<Developer> readDevelopers(Connection connection) {
         List<Developer> list = new ArrayList<>();
-        String query = "SELECT * FROM developers";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(READ)) {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {

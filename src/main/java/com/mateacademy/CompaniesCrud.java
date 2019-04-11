@@ -11,15 +11,13 @@ import java.util.List;
 
 public class CompaniesCrud {
     private static final Logger LOGGER = Logger.getLogger(CompaniesCrud.class);
-
+    private static final String CREATE = "INSERT INTO companies (id, name, site,) VALUES (null, ?, ?)";
+    private static final String READ = "SELECT * FROM companies";
+    private static final String UPDATE = "UPDATE companies SET name = ?, site = ? WHERE id = ?";
+    private static final String DELETE = "DELETE FROM companies WHERE name = ?";
+    
     public void addCompany(Company company, Connection connection) {
-        String query = "INSERT INTO companies ("
-                + " id,"
-                + " name,"
-                + " site,"
-                + ") VALUES ("
-                + "null, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(CREATE)) {
 
             statement.setString(2, company.getName());
             statement.setString(3, company.getSite());
@@ -31,9 +29,7 @@ public class CompaniesCrud {
     }
 
     public void removeCompany(Company company, Connection connection) {
-        String query = "DELETE FROM companies WHERE name = ?";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(DELETE)) {
 
             statement.setString(2, company.getName());
             statement.executeUpdate();
@@ -44,9 +40,7 @@ public class CompaniesCrud {
     }
 
     public void updateCompany(Company company, Connection connection, int id) {
-        String query = "UPDATE companies SET name = ?, site = ? WHERE id = ?";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(UPDATE)) {
 
             statement.setInt(1, id);
             statement.setString(2, company.getName());
@@ -60,9 +54,8 @@ public class CompaniesCrud {
 
     public List<Company> readCompanies(Connection connection) {
         List<Company> list = new ArrayList<>();
-        String query = "SELECT * FROM companies";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(READ)) {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {

@@ -11,15 +11,13 @@ import java.util.List;
 
 public class SkillsCrud {
     private static final Logger LOGGER = Logger.getLogger(SkillsCrud.class);
+    private static final String CREATE = "INSERT INTO skills ( id, skill, lvl,) VALUES (null, ?, ?)";
+    private static final String READ = "SELECT * FROM skills";
+    private static final String UPDATE  = "UPDATE skills SET name = ?, site = ? WHERE id = ?";
+    private static final String DELETE = "DELETE FROM skills WHERE name = ?";
 
     public void addSkill(Skill skill, Connection connection) {
-        String query = "INSERT INTO skills ("
-                + " id,"
-                + " skill,"
-                + " lvl,"
-                + ") VALUES ("
-                + "null, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(CREATE)) {
 
             statement.setString(2, skill.getSkill());
             statement.setString(3, skill.getLvl());
@@ -31,9 +29,8 @@ public class SkillsCrud {
     }
 
     public void removeSkill(Skill skill, Connection connection) {
-        String query = "DELETE FROM skills WHERE name = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(DELETE)) {
 
             statement.setString(2, skill.getSkill());
             statement.executeUpdate();
@@ -44,9 +41,8 @@ public class SkillsCrud {
     }
 
     public void updateSkill(Skill skill, Connection connection, int id) {
-        String query = "UPDATE skills SET name = ?, site = ? WHERE id = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(UPDATE)) {
 
             statement.setInt(1, id);
             statement.setString(2, skill.getSkill());
@@ -60,9 +56,8 @@ public class SkillsCrud {
 
     public List<Skill> readSkills(Connection connection) {
         List<Skill> list = new ArrayList<>();
-        String query = "SELECT * FROM skills";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(READ)) {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {

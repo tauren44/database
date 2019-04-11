@@ -11,15 +11,13 @@ import java.util.List;
 
 public class ProjectsCrud {
     private static final Logger LOGGER = Logger.getLogger(ProjectsCrud.class);
+    private static final String CREATE = "INSERT INTO projects ( id, name, date,) VALUES (null, ?, ?)";
+    private static final String READ = "SELECT * FROM projects";
+    private static final String UPDATE = "UPDATE projects SET name = ?, site = ? WHERE id = ?";
+    private static final String DELETE = "DELETE FROM projects WHERE name = ?";
 
     public void addProject(Project project, Connection connection) {
-        String query = "INSERT INTO projects ("
-                + " id,"
-                + " name,"
-                + " date,"
-                + ") VALUES ("
-                + "null, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(CREATE)) {
 
             statement.setString(2, project.getName());
             statement.setString(3, project.getDate());
@@ -31,9 +29,7 @@ public class ProjectsCrud {
     }
 
     public void removeProject(Project project, Connection connection) {
-        String query = "DELETE FROM projects WHERE name = ?";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(DELETE)) {
 
             statement.setString(2, project.getName());
             statement.executeUpdate();
@@ -44,9 +40,8 @@ public class ProjectsCrud {
     }
 
     public void updateProject(Project project, Connection connection, int id) {
-        String query = "UPDATE projects SET name = ?, site = ? WHERE id = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(UPDATE)) {
 
             statement.setInt(1, id);
             statement.setString(2, project.getName());
@@ -60,9 +55,8 @@ public class ProjectsCrud {
 
     public List<Project> readProjects(Connection connection) {
         List<Project> list = new ArrayList<>();
-        String query = "SELECT * FROM projects";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(READ)) {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
