@@ -1,10 +1,14 @@
-package com.mateacademy.model;
+package com.mateacademy.model.entity;
 
+import com.mateacademy.model.listener.ModelListener;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -14,9 +18,11 @@ import java.util.Set;
 
 @Getter
 @Setter
-
 @Entity
 @Table(name = "developers")
+@NoArgsConstructor
+@AllArgsConstructor
+@EntityListeners(ModelListener.class)
 public class Developer extends Model {
 
     @Column(name = "age")

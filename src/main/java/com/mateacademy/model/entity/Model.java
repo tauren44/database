@@ -1,4 +1,4 @@
-package com.mateacademy.model;
+package com.mateacademy.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
