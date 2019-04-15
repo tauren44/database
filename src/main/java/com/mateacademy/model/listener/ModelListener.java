@@ -20,26 +20,26 @@ public class ModelListener<T extends Model> {
 
     @PostPersist
     public void postPersist(T t) {
-        System.out.println("Post-Persist operation: " + t.getName());
+        LOGGER.info("Post-Persist operation: " + t.getName());
     }
 
     @PreRemove
     public void preRemove(T t) {
-        System.out.println("Pre-Removing operation: " + t.getName());
+        LOGGER.info("Pre-Removing operation: " + t.getName());
     }
 
     @PostRemove
     public void postRemove(T t) {
-        System.out.println("Post-Remove operation: " + t.getName());
+        LOGGER.info("Post-Remove operation: " + t.getName());
     }
 
     @PreUpdate
     public void preUpdate(T t) {
-        System.out.println("Pre-Updating operation: " + t.getName());
+        LOGGER.info("Pre-Updating operation: " + t.getName());
     }
 
     @PostUpdate
     public void postUpdate(T t) {
-        System.out.println("Post-Update operation: " + t.getName());
+        LOGGER.info("Post-Update operation: " + t.getName());
     }
 }
