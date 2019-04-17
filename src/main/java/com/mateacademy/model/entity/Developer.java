@@ -2,6 +2,8 @@ package com.mateacademy.model.entity;
 
 import com.mateacademy.model.listener.ModelListener;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,16 +25,17 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(ModelListener.class)
+@EqualsAndHashCode(callSuper = true)
 public class Developer extends Model {
 
     @Column(name = "age")
-    private int age;
+    private int age = 0;
 
     @Column(name = "sex")
     private String sex;
 
     @Column(name = "salary")
-    private int salary;
+    private int salary = 0;
 
     @ManyToMany
     @JoinTable(name = "developer_skill", joinColumns = {@JoinColumn(name = "dev_id")},

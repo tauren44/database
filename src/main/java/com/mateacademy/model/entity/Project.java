@@ -2,6 +2,7 @@ package com.mateacademy.model.entity;
 
 import com.mateacademy.model.listener.ModelListener;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,10 +26,12 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(ModelListener.class)
+@EqualsAndHashCode(callSuper = true)
 public class Project extends Model {
 
     @Column(name = "date")
-    private String date;
+    @Temporal(TemporalType.DATE)
+    private LocalDate date;
 
     @ManyToMany(mappedBy = "projects")
     private Set<Developer> developers = new HashSet<>();

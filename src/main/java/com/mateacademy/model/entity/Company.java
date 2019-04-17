@@ -2,6 +2,7 @@ package com.mateacademy.model.entity;
 
 import com.mateacademy.model.listener.ModelListener;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(ModelListener.class)
+@EqualsAndHashCode(callSuper = true)
 public class Company extends Model{
 
     @Column(name = "site")
