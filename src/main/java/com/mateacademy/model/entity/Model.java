@@ -1,5 +1,6 @@
 package com.mateacademy.model.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import javax.persistence.MappedSuperclass;
 @Getter
 @Setter
 @MappedSuperclass
+@EqualsAndHashCode(exclude = {"id"})
 public abstract class Model {
 
     @Id

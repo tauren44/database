@@ -17,9 +17,13 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 
     @Override
     public Company create(Company company) {
-        em.getTransaction().begin();
-        em.persist(company);
-        em.getTransaction().commit();
+        try {
+            em.getTransaction().begin();
+            em.persist(company);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
         return company;
     }
 

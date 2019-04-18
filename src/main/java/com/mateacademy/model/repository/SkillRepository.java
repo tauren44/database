@@ -3,11 +3,11 @@ package com.mateacademy.model.repository;
 import com.mateacademy.model.entity.Skill;
 
 public interface SkillRepository extends ModelRepository<Skill> {
-    public Skill create(Skill skill);
+    Skill create(Skill skill);
 
-    public Skill read(Long id);
+    Skill read(Long id);
 
-    public Skill update(Skill skill);
+    Skill update(Skill skill);
 
-    public void delete(Skill skill);
+    void delete(Skill skill);
 }

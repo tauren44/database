@@ -11,6 +11,8 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -29,13 +31,14 @@ import java.util.Set;
 public class Developer extends Model {
 
     @Column(name = "age")
-    private int age = 0;
+    private Integer age;
 
     @Column(name = "sex")
-    private String sex;
+    @Enumerated(EnumType.STRING)
+    private Sex sex;
 
     @Column(name = "salary")
-    private int salary = 0;
+    private Integer salary = 0;
 
     @ManyToMany
     @JoinTable(name = "developer_skill", joinColumns = {@JoinColumn(name = "dev_id")},
